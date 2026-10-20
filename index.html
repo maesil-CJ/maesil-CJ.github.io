@@ -218,7 +218,11 @@
   @media (min-width: 860px) { .timeline li { grid-template-columns: 15rem 1fr; } }
   .timeline .when { color: var(--muted); font-size: .95rem; font-variant-numeric: tabular-nums; padding-top: .15rem; }
   .timeline h3 { font-size: 1.1rem; }
-  .timeline .org { font-weight: 500; }
+  .company { display: flex; align-items: center; gap: .6rem; margin-top: .55rem; font-weight: 700; font-variation-settings: "wdth" 105; }
+  .company img {
+    width: 36px; height: 36px; object-fit: contain;
+    background: #FFFFFF; border: 1px solid var(--rule); border-radius: 6px; padding: 3px;
+  }
 
   /* Education + skills */
   .two-col { display: grid; gap: 2.5rem; }
@@ -358,32 +362,45 @@
   <section id="experience" aria-labelledby="experience-h">
     <div class="wrap">
       <h2 id="experience-h">Experience</h2>
+      <!-- Logos: upload square images to an images/ folder as soelect.png, fastlion.png, ecpower.png. Until then only the names show. -->
       <ol class="timeline">
         <li>
-          <div class="when">Mar – May 2026</div>
           <div>
-            <h3>Manufacturing Process Engineer <span class="org">at Soelect</span></h3>
+            <div class="when">Mar – May 2026</div>
+            <div class="company"><img src="images/soelect.png" alt="" onerror="this.remove()"><span>Soelect</span></div>
+          </div>
+          <div>
+            <h3>Manufacturing Process Engineer</h3>
             <p class="muted">Greensboro, NC. Roll-to-roll lithium metal anode production; anode and pouch-cell characterization with SEM/EDX, EIS, and cycle testing.</p>
           </div>
         </li>
         <li>
-          <div class="when">Jul 2024 – Mar 2026</div>
           <div>
-            <h3>Electrical Engineer <span class="org">at FastLion Energy</span></h3>
+            <div class="when">Jul 2024 – Mar 2026</div>
+            <div class="company"><img src="images/fastlion.png" alt="" onerror="this.remove()"><span>FastLion Energy</span></div>
+          </div>
+          <div>
+            <h3>Electrical Engineer</h3>
             <p class="muted">State College, PA. BMS hardware and CAN communication for 6T military and industrial batteries.</p>
           </div>
         </li>
         <li>
-          <div class="when">Feb – Jul 2024</div>
           <div>
-            <h3>Electrical Engineer <span class="org">at EC Power Group</span></h3>
+            <div class="when">Feb – Jul 2024</div>
+            <div class="company"><img src="images/ecpower.png" alt="" onerror="this.remove()"><span>EC Power Group</span></div>
+          </div>
+          <div>
+            <h3>Electrical Engineer</h3>
             <p class="muted">State College, PA. Microcontroller firmware for BMS prototypes and a custom cell test platform. Promoted from intern.</p>
           </div>
         </li>
         <li>
-          <div class="when">May 2023 – Feb 2024</div>
           <div>
-            <h3>Electrical Engineering Intern <span class="org">at EC Power Group</span></h3>
+            <div class="when">May 2023 – Feb 2024</div>
+            <div class="company"><img src="images/ecpower.png" alt="" onerror="this.remove()"><span>EC Power Group</span></div>
+          </div>
+          <div>
+            <h3>Electrical Engineering Intern</h3>
             <p class="muted">Prototype circuits, plus firmware and PCB layout for an automated battery test rig.</p>
           </div>
         </li>
