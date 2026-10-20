@@ -310,6 +310,24 @@
           </div>
         </article>
         -->
+        <article class="project">
+          <div>
+            <h3>ManiMo</h3>
+            <p class="context">EC601 team project, Boston University, Fall 2026 (in progress)</p>
+          </div>
+          <div>
+            <p>Goal: a disaster-response mobile manipulator that grips irregular objects firmly enough not to drop them and gently enough not to crush them, and adapts its motion when people are nearby.</p>
+            <p>Sprint 1, working in Isaac Sim: I developed the ROS 2 mission node for a wheeled base with a Franka Panda arm. The robot surveys 360°, matches 2D LiDAR object clusters to camera-based color detection to find which table holds the target cube, parks squarely using a LiDAR line fit of the table face, then picks the cube and carries it to the other table, with a LiDAR emergency stop throughout.</p>
+            <ul class="stack"><li>Isaac Sim</li><li>ROS 2 (rclpy)</li><li>Python</li><li>NumPy</li><li>2D LiDAR</li><li>Camera detection</li><li>Linux (WSL)</li></ul>
+            <figure>
+              <iframe src="https://www.youtube-nocookie.com/embed/GNd_WP0xiPE"
+                title="ManiMo Sprint 1 demo"
+                style="width:100%; max-width:40rem; aspect-ratio:16/9; border:0; border-radius:4px;"
+                allowfullscreen loading="lazy"></iframe>
+            </figure>
+            <div class="links"><a href="https://www.youtube.com/watch?v=GNd_WP0xiPE">Sprint 1 demo</a></div>
+          </div>
+        </article>        
 
         <article class="project">
           <div>
