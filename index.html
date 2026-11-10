@@ -323,15 +323,8 @@
             <p>A mobile manipulator that grips objects firmly enough not to drop them and gently enough not to crush them, built on a Hiwonder LanderPi. I own grip-force safety in training, camera perception, the GPU cluster setup, and real-robot bring-up. A teammate owns the base grasping policy, which I extend.</p>
             <p>Grasping with reinforcement learning: I added per-object force classes, jaw contact sensors, a continuous jaw action and a crush penalty to an Isaac Lab lift task, and trained PPO policies on 4,096 parallel simulated robots. In noise-free evaluation, the best model lifts 86% of objects at a 10–12% crush rate for the 1.5 N and 1.75 N classes. I also found that evaluating with exploration noise had overstated the crush rate by up to 17 points. The lightest class (0.5 N) is still unsolved, and I traced it to a grip that is too weak plus force overshoot while closing.</p>
             <p>Perception and infrastructure: classical RGB-D perception estimates an object's class, 3-D position, size, shape and heading from one depth frame, with under 1 mm position error at 0.65 m in simulation. I got Isaac Sim rendering on BU's GPU cluster and wrote the team guide. I also brought up the real LanderPi over ROS 2, and after a wrist-servo failure I set a rule that every arm command is previewed in simulation first.</p>
-            <p class="muted">Grasping and perception results so far are from simulation. The video shows Sprint 1, an autonomous pick-and-place mission in Isaac Sim.</p>
+            <p class="muted">Grasping and perception results so far are from simulation.</p>
             <ul class="stack"><li>Isaac Lab</li><li>Isaac Sim</li><li>PPO</li><li>PyTorch</li><li>ROS 2</li><li>RGB-D perception</li><li>HPC</li></ul>
-            <figure>
-              <iframe src="https://www.youtube-nocookie.com/embed/GNd_WP0xiPE"
-                title="ManiMo Sprint 1 demo"
-                style="width:100%; max-width:40rem; aspect-ratio:16/9; border:0; border-radius:4px;"
-                allowfullscreen loading="lazy"></iframe>
-            </figure>
-            <div class="links"><a href="https://www.youtube.com/watch?v=GNd_WP0xiPE">Sprint 1 demo</a></div>
           </div>
         </article>
 
