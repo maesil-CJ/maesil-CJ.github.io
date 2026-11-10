@@ -316,13 +316,15 @@
 
         <article class="project">
           <div>
-            <h3>ManiMo</h3>
-            <p class="context">EC601 team project, Boston University, Fall 2026 (in progress)</p>
+            <h3>ManiMo: grip-force-limited grasping</h3>
+            <p class="context">EC601 team project (team of 3), Boston University, Fall 2026 (in progress)</p>
           </div>
           <div>
-            <p>Goal: a disaster-response mobile manipulator that grips irregular objects firmly enough not to drop them and gently enough not to crush them, and adapts its motion when people are nearby.</p>
-            <p>Sprint 1, working in Isaac Sim: I developed the ROS 2 mission node for a wheeled base with a Franka Panda arm. The robot surveys 360°, matches 2D LiDAR object clusters to camera-based color detection to find which table holds the target cube, parks squarely using a LiDAR line fit of the table face, then picks the cube and carries it to the other table, with a LiDAR emergency stop throughout.</p>
-            <ul class="stack"><li>Isaac Sim</li><li>ROS 2 (rclpy)</li><li>Python</li><li>NumPy</li><li>2D LiDAR</li><li>Camera detection</li><li>Linux (WSL)</li></ul>
+            <p>A mobile manipulator that grips objects firmly enough not to drop them and gently enough not to crush them, built on a Hiwonder LanderPi. I own grip-force safety in training, camera perception, the GPU cluster setup, and real-robot bring-up. A teammate owns the base grasping policy, which I extend.</p>
+            <p>Grasping with reinforcement learning: I added per-object force classes, jaw contact sensors, a continuous jaw action and a crush penalty to an Isaac Lab lift task, and trained PPO policies on 4,096 parallel simulated robots. In noise-free evaluation, the best model lifts 86% of objects at a 10–12% crush rate for the 1.5 N and 1.75 N classes. I also found that evaluating with exploration noise had overstated the crush rate by up to 17 points. The lightest class (0.5 N) is still unsolved, and I traced it to a grip that is too weak plus force overshoot while closing.</p>
+            <p>Perception and infrastructure: classical RGB-D perception estimates an object's class, 3-D position, size, shape and heading from one depth frame, with under 1 mm position error at 0.65 m in simulation. I got Isaac Sim rendering on BU's GPU cluster and wrote the team guide. I also brought up the real LanderPi over ROS 2, and after a wrist-servo failure I set a rule that every arm command is previewed in simulation first.</p>
+            <p class="muted">Grasping and perception results so far are from simulation. The video shows Sprint 1, an autonomous pick-and-place mission in Isaac Sim.</p>
+            <ul class="stack"><li>Isaac Lab</li><li>Isaac Sim</li><li>PPO</li><li>PyTorch</li><li>ROS 2</li><li>RGB-D perception</li><li>HPC</li></ul>
             <figure>
               <iframe src="https://www.youtube-nocookie.com/embed/GNd_WP0xiPE"
                 title="ManiMo Sprint 1 demo"
@@ -330,6 +332,34 @@
                 allowfullscreen loading="lazy"></iframe>
             </figure>
             <div class="links"><a href="https://www.youtube.com/watch?v=GNd_WP0xiPE">Sprint 1 demo</a></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div>
+            <h3>Multi-crop detection for an agricultural robot</h3>
+            <p class="context">Robotics Club, Agrobot team, Boston University, Fall 2026 (in progress)</p>
+          </div>
+          <div>
+            <p>A crop detector for the club's agricultural robot, starting with tomatoes. I built the pipeline end to end: converting the LaboroTomato dataset (804 images, 10,610 polygon labels) to bounding boxes with zero label loss, then fine-tuning a COCO-pretrained Faster R-CNN (ResNet-50 FPN).</p>
+            <p>On the validation set it reaches 0.90 precision and 0.91 recall (IoU &gt; 0.5). I ran ablations on input size, NMS and augmentation; a higher input resolution gave no clear gain at 1.5× the compute, so I kept the faster 800-px baseline.</p>
+            <ul class="stack"><li>PyTorch</li><li>torchvision</li><li>Faster R-CNN</li><li>Python</li><li>Object detection</li><li>Jupyter</li></ul>
+            <!-- Optional: save a prediction image from the notebook as images/agrobot-predictions.jpg and uncomment:
+            <figure>
+              <img src="images/agrobot-predictions.jpg" alt="Tomato detections: green ground-truth boxes and red model predictions">
+            </figure>
+            -->
+          </div>
+        </article>
+
+        <article class="project">
+          <div>
+            <h3>Penn State Advanced Vehicle Team</h3>
+            <p class="context">AutoDrive Challenge II, Penn State, 2023. Head of Vehicle Systems (ME496) and Electrical Engineer (ME440W capstone)</p>
+          </div>
+          <div>
+            <p>An autonomous Chevrolet Bolt EUV for the AutoDrive Challenge II competition. I designed the vehicle's electrical power distribution, sensor suite and roof rack, then led vehicle-systems hardware: waterproofing the sensors and wiring harnesses, and integrating the sensors with the central compute.</p>
+            <ul class="stack"><li>Power distribution</li><li>Wiring harnesses</li><li>Sensor integration</li><li>CAN</li></ul>
           </div>
         </article>
 
@@ -371,7 +401,7 @@
           </div>
           <div>
             <h3>Manufacturing Process Engineer</h3>
-            <p class="muted">Greensboro, NC. Roll-to-roll lithium metal anode production; anode and pouch-cell characterization with SEM/EDX, EIS, and cycle testing.</p>
+            <p class="muted">Greensboro, NC. Ran roll-to-roll lithium metal anode production and characterized cells with SEM/EDX, EIS and cycling. Assembled ~5 mAh pouch cells and tested anodes with optical microscopy, contact-angle and peel-strength tests.</p>
           </div>
         </li>
         <li>
@@ -381,27 +411,17 @@
           </div>
           <div>
             <h3>Electrical Engineer</h3>
-            <p class="muted">State College, PA. BMS hardware and CAN communication for 6T military and industrial batteries.</p>
+            <p class="muted">State College, PA. Designed and prototyped lithium-ion battery management systems for 6T military and industrial batteries: cell monitoring, fault detection and system-level protection, on multi-layer PCBs with precision analog sensing, PWM control, SPI/I2C and high-current power paths. Developed and validated CAN communication for telemetry, diagnostics and vehicle integration, brought up and debugged the prototype hardware, and worked with mechanical and systems engineers on performance, safety and environmental requirements.</p>
           </div>
         </li>
         <li>
           <div>
-            <div class="when">Feb – Jul 2024</div>
+            <div class="when">May 2023 – Jul 2024</div>
             <div class="company"><img src="images/ecpower.jpg" alt="" onerror="this.remove()"><span>EC Power Group</span></div>
           </div>
           <div>
             <h3>Electrical Engineer</h3>
-            <p class="muted">State College, PA. Microcontroller firmware for BMS prototypes and a custom cell test platform. Promoted from intern.</p>
-          </div>
-        </li>
-        <li>
-          <div>
-            <div class="when">May 2023 – Feb 2024</div>
-            <div class="company"><img src="images/ecpower.jpg" alt="" onerror="this.remove()"><span>EC Power Group</span></div>
-          </div>
-          <div>
-            <h3>Electrical Engineering Intern</h3>
-            <p class="muted">Prototype circuits, plus firmware and PCB layout for an automated battery test rig.</p>
+            <p class="muted">State College, PA. Microcontroller firmware for BMS prototypes, a custom cell test platform, and an automated battery test rig. Promoted from intern in February 2024.</p>
           </div>
         </li>
       </ol>
@@ -428,13 +448,14 @@
       </div>
       <div>
         <h2>Skills</h2>
-        <!-- Add PyTorch / OpenCV / Git here once you can talk through them in an interview -->
+        <!-- Add OpenCV / Git here once you can talk through them in an interview -->
         <dl class="skills">
           <div><dt>Programming</dt><dd>Python, C/C++, MATLAB, LabVIEW</dd></div>
-          <div><dt>Robotics</dt><dd>ROS 2, NVIDIA Isaac Sim</dd></div>
+          <div><dt>Robotics and ML</dt><dd>ROS 2, NVIDIA Isaac Sim and Isaac Lab, reinforcement learning (PPO), PyTorch, RGB-D perception</dd></div>
+          <div><dt>Tools</dt><dd>Linux, Git, HPC clusters (Singularity)</dd></div>
           <div><dt>Hardware and EDA</dt><dd>Altium, KiCad, multi-layer PCB design, Arduino</dd></div>
           <div><dt>Communication</dt><dd>CAN, SPI, I2C</dd></div>
-          <div><dt>Lab and test</dt><dd>Oscilloscopes, logic analyzers, SEM/EDX, EIS, cycle testing</dd></div>
+          <div><dt>Lab and test</dt><dd>Oscilloscopes, logic analyzers, SEM/EDX, EIS, li-ion battery cycle testing</dd></div>
           <div><dt>Mechanical</dt><dd>SolidWorks, Onshape, Abaqus, 3D printing</dd></div>
         </dl>
       </div>
