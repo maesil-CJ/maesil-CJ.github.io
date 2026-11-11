@@ -317,14 +317,24 @@
         <article class="project">
           <div>
             <h3>ManiMo: grip-force-limited grasping</h3>
-            <p class="context">EC601 team project (team of 3), Boston University, Fall 2026 (in progress)</p>
+            <p class="context">EC601 team project (team of 2), Boston University, Fall 2026 (in progress)</p>
           </div>
           <div>
-            <p>A mobile manipulator that grips objects firmly enough not to drop them and gently enough not to crush them, built on a Hiwonder LanderPi. I own grip-force safety in training, camera perception, the GPU cluster setup, and real-robot bring-up. A teammate owns the base grasping policy, which I extend.</p>
-            <p>Grasping with reinforcement learning: I added per-object force classes, jaw contact sensors, a continuous jaw action and a crush penalty to an Isaac Lab lift task, and trained PPO policies on 4,096 parallel simulated robots. In noise-free evaluation, the best model lifts 86% of objects at a 10–12% crush rate for the 1.5 N and 1.75 N classes. I also found that evaluating with exploration noise had overstated the crush rate by up to 17 points. The lightest class (0.5 N) is still unsolved, and I traced it to a grip that is too weak plus force overshoot while closing.</p>
-            <p>Perception and infrastructure: classical RGB-D perception estimates an object's class, 3-D position, size, shape and heading from one depth frame, with under 1 mm position error at 0.65 m in simulation. I got Isaac Sim rendering on BU's GPU cluster and wrote the team guide. I also brought up the real LanderPi over ROS 2, and after a wrist-servo failure I set a rule that every arm command is previewed in simulation first.</p>
+            <p>A mobile manipulator that grips objects firmly enough not to drop them and gently enough not to crush them, built on a Hiwonder LanderPi. My part: grip-force safety in training, camera perception, the GPU cluster setup, real-robot bring-up, and the autonomous mission in the video below. A teammate owns the base grasping policy, which I extend.</p>
+            <p>Grasping with reinforcement learning: per-object force classes, jaw contact sensors, a continuous jaw action and a crush penalty added to an Isaac Lab lift task, with PPO policies trained on 4,096 parallel simulated robots. In noise-free evaluation, the best model lifts 86% of objects at a 10–12% crush rate for the 1.5 N and 1.75 N classes, and evaluating with exploration noise turned out to overstate the crush rate by up to 17 points. The lightest class (0.5 N) is still unsolved; its failures trace to a grip that is too weak plus force overshoot while closing.</p>
+            <p>Perception and infrastructure: classical RGB-D perception estimates an object's class, 3-D position, size, shape and heading from one depth frame, with under 1 mm position error at 0.65 m in simulation. Isaac Sim now renders on BU's GPU cluster, with a setup guide for the team. The real LanderPi is up over ROS 2, and since a wrist-servo failure, every arm command is previewed in simulation first.</p>
             <p class="muted">Grasping and perception results so far are from simulation.</p>
             <ul class="stack"><li>Isaac Lab</li><li>Isaac Sim</li><li>PPO</li><li>PyTorch</li><li>ROS 2</li><li>RGB-D perception</li><li>HPC</li></ul>
+            <figure>
+              <iframe src="https://www.youtube-nocookie.com/embed/9-Idm4X5j-w"
+                title="LanderPi autonomous cube transfer in Isaac Sim"
+                style="width:100%; max-width:40rem; aspect-ratio:16/9; border:0; border-radius:4px;"
+                allowfullscreen loading="lazy"></iframe>
+            </figure>
+            <p><strong>Video: autonomous pick-and-place on a simulated LanderPi.</strong> The robot (mecanum base, 5-DOF arm, wrist depth camera, 2-D LiDAR) surveys two randomly placed tables, finds the one holding a 3 cm cube, drives to it while the arm keeps the camera on the cube, picks it up, carries it on its tray, and places it on the other table, with no human input and no hard-coded positions.</p>
+            <p>The mission code (about 1,300 lines of Python) talks only to the real robot's ROS 2 interfaces, so the same code is meant to run on the hardware. A bridge node makes Isaac Sim present those interfaces, and the manufacturer's inverse-kinematics service, which only runs on the robot's ARM board, is re-implemented as a drop-in simulation node. The camera model is calibrated to 1–2 mm, and the drive checks the robot's full outline against LiDAR obstacles before moving or turning.</p>
+            <p class="muted">Simulation only; the mission hasn't run on the physical robot yet. The cube can slide on the tray and slip during the re-grasp, and the success rate over many runs hasn't been measured.</p>
+            <div class="links"><a href="https://www.youtube.com/watch?v=9-Idm4X5j-w">Watch on YouTube</a></div>
           </div>
         </article>
 
