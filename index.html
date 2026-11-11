@@ -259,7 +259,7 @@
     <p class="lede">
       Electrical engineer working from the battery cell up to the robot.
       I spent two years building battery management systems and test hardware,
-      and I'm now studying cyber-physical systems, robotics, and computer vision
+      and I'm now working on robotics and machine learning projects
       for an MS at Boston University.
     </p>
   </div>
@@ -272,12 +272,12 @@
     <span class="bus next" aria-hidden="true"></span>
     <span class="pulse" aria-hidden="true"></span>
     <ol class="chain" aria-label="Where my experience sits in a robot's stack, from energy storage to perception">
-      <li class="done"><div class="node"><strong>Li-ion cells</strong><span>Anode fabrication, pouch cells, EIS</span></div></li>
-      <li class="done"><div class="node"><strong>Battery management</strong><span>BMS design for 6T platforms</span></div></li>
+      <li class="done"><div class="node"><strong>Li-ion cells</strong><span>Anode production, pouch cells</span></div></li>
+      <li class="done"><div class="node"><strong>Battery management</strong><span>BMS design and testing</span></div></li>
       <li class="done"><div class="node"><strong>Embedded firmware</strong><span>Microcontrollers in C/C++</span></div></li>
-      <li class="done"><div class="node"><strong>Sensing and buses</strong><span>Precision analog, CAN, SPI, I2C</span></div></li>
-      <li class="next"><div class="node"><strong>Control</strong><span>Cyber-physical systems</span></div></li>
-      <li class="next"><div class="node"><strong>Perception and learning</strong><span>Robotics, computer vision, ML</span></div></li>
+      <li class="done"><div class="node"><strong>Sensing and buses</strong><span>Precision sensing, CAN</span></div></li>
+      <li class="next"><div class="node"><strong>Simulation</strong><span>Isaac Sim, Isaac Lab, ROS 2</span></div></li>
+      <li class="next"><div class="node"><strong>Perception and learning</strong><span>Camera perception, PyTorch</span></div></li>
     </ol>
     </div>
     <ul class="legend">
@@ -320,20 +320,17 @@
             <p class="context">EC601 team project (team of 2), Boston University, Fall 2026 (in progress)</p>
           </div>
           <div>
-            <p>A mobile manipulator that grips objects firmly enough not to drop them and gently enough not to crush them, built on a Hiwonder LanderPi. My part: grip-force safety in training, camera perception, the GPU cluster setup, real-robot bring-up, and the autonomous mission in the video below. A teammate owns the base grasping policy, which I extend.</p>
-            <p>Grasping with reinforcement learning: per-object force classes, jaw contact sensors, a continuous jaw action and a crush penalty added to an Isaac Lab lift task, with PPO policies trained on 4,096 parallel simulated robots. In noise-free evaluation, the best model lifts 86% of objects at a 10–12% crush rate for the 1.5 N and 1.75 N classes, and evaluating with exploration noise turned out to overstate the crush rate by up to 17 points. The lightest class (0.5 N) is still unsolved; its failures trace to a grip that is too weak plus force overshoot while closing.</p>
-            <p>Perception and infrastructure: classical RGB-D perception estimates an object's class, 3-D position, size, shape and heading from one depth frame, with under 1 mm position error at 0.65 m in simulation. Isaac Sim now renders on BU's GPU cluster, with a setup guide for the team. The real LanderPi is up over ROS 2, and since a wrist-servo failure, every arm command is previewed in simulation first.</p>
-            <p class="muted">Grasping and perception results so far are from simulation.</p>
-            <ul class="stack"><li>Isaac Lab</li><li>Isaac Sim</li><li>PPO</li><li>PyTorch</li><li>ROS 2</li><li>RGB-D perception</li><li>HPC</li></ul>
+            <p>A mobile manipulator that grips objects firmly enough not to drop them and gently enough not to crush them, built on a Hiwonder LanderPi robot. My part: grip-force limits for robot grasping in Isaac Lab, reinforcement learning training on BU's GPU cluster, camera perception, and getting the real LanderPi driving over ROS 2.</p>
+            <p>The trained policies lift most objects without crushing them in simulation, and the work showed that the original evaluation overstated crushing. The camera perception estimates an object's type, position, size and shape. Every arm command is now checked in simulation before it runs on the real robot.</p>
+            <ul class="stack"><li>Isaac Lab</li><li>Isaac Sim</li><li>Reinforcement learning</li><li>PyTorch</li><li>ROS 2</li><li>Camera perception</li></ul>
             <figure>
               <iframe src="https://www.youtube-nocookie.com/embed/9-Idm4X5j-w"
-                title="LanderPi autonomous cube transfer in Isaac Sim"
+                title="LanderPi autonomous pick-and-place in Isaac Sim"
                 style="width:100%; max-width:40rem; aspect-ratio:16/9; border:0; border-radius:4px;"
                 allowfullscreen loading="lazy"></iframe>
             </figure>
-            <p><strong>Video: autonomous pick-and-place on a simulated LanderPi.</strong> The robot (mecanum base, 5-DOF arm, wrist depth camera, 2-D LiDAR) surveys two randomly placed tables, finds the one holding a 3 cm cube, drives to it while the arm keeps the camera on the cube, picks it up, carries it on its tray, and places it on the other table, with no human input and no hard-coded positions.</p>
-            <p>The mission code (about 1,300 lines of Python) talks only to the real robot's ROS 2 interfaces, so the same code is meant to run on the hardware. A bridge node makes Isaac Sim present those interfaces, and the manufacturer's inverse-kinematics service, which only runs on the robot's ARM board, is re-implemented as a drop-in simulation node. The camera model is calibrated to 1–2 mm, and the drive checks the robot's full outline against LiDAR obstacles before moving or turning.</p>
-            <p class="muted">Simulation only; the mission hasn't run on the physical robot yet. The cube can slide on the tray and slip during the re-grasp, and the success rate over many runs hasn't been measured.</p>
+            <p><strong>Video: autonomous pick-and-place on a simulated LanderPi.</strong> The robot finds the table holding a cube, picks the cube up, and carries it to the other table with no human input. The mission code uses the real robot's ROS 2 interfaces, so the same code is meant to run on the hardware.</p>
+            <p class="muted">Results so far are from simulation.</p>
             <div class="links"><a href="https://www.youtube.com/watch?v=9-Idm4X5j-w">Watch on YouTube</a></div>
           </div>
         </article>
@@ -344,9 +341,8 @@
             <p class="context">Robotics Club, Agrobot team, Boston University, Fall 2026 (in progress)</p>
           </div>
           <div>
-            <p>A crop detector for the club's agricultural robot, starting with tomatoes. I built the pipeline end to end: converting the LaboroTomato dataset (804 images, 10,610 polygon labels) to bounding boxes with zero label loss, then fine-tuning a COCO-pretrained Faster R-CNN (ResNet-50 FPN).</p>
-            <p>On the validation set it reaches 0.90 precision and 0.91 recall (IoU &gt; 0.5). I ran ablations on input size, NMS and augmentation; a higher input resolution gave no clear gain at 1.5× the compute, so I kept the faster 800-px baseline.</p>
-            <ul class="stack"><li>PyTorch</li><li>torchvision</li><li>Faster R-CNN</li><li>Python</li><li>Object detection</li><li>Jupyter</li></ul>
+            <p>A tomato detector for the club's agricultural robot. I trained a Faster R-CNN model in PyTorch, built the dataset pipeline, and compared model settings to choose the fastest accurate model. Testing also showed that the detector can mistake human hands for tomatoes, so I flagged that it must not be used as a safety check.</p>
+            <ul class="stack"><li>PyTorch</li><li>Faster R-CNN</li><li>Python</li><li>Object detection</li></ul>
             <!-- Optional: save a prediction image from the notebook as images/agrobot-predictions.jpg and uncomment:
             <figure>
               <img src="images/agrobot-predictions.jpg" alt="Tomato detections: green ground-truth boxes and red model predictions">
@@ -361,30 +357,8 @@
             <p class="context">AutoDrive Challenge II, Penn State, 2023. Head of Vehicle Systems (ME496) and Electrical Engineer (ME440W capstone)</p>
           </div>
           <div>
-            <p>An autonomous Chevrolet Bolt EUV for the AutoDrive Challenge II competition. I designed the vehicle's electrical power distribution, sensor suite and roof rack, then led vehicle-systems hardware: waterproofing the sensors and wiring harnesses, and integrating the sensors with the central compute.</p>
-            <ul class="stack"><li>Power distribution</li><li>Wiring harnesses</li><li>Sensor integration</li><li>CAN</li></ul>
-          </div>
-        </article>
-
-        <article class="project">
-          <div>
-            <h3>Cell-level battery test platform</h3>
-            <p class="context">EC Power Group, 2024</p>
-          </div>
-          <div>
-            <p>Led development of a custom platform for electrical characterization of battery cells, from the circuit board through the embedded firmware to the data acquisition workflow.</p>
-            <ul class="stack"><li>PCB design</li><li>C/C++ firmware</li><li>Data acquisition</li><li>Sensor interfaces</li></ul>
-          </div>
-        </article>
-
-        <article class="project">
-          <div>
-            <h3>Battery management for 6T platforms</h3>
-            <p class="context">FastLion Energy, 2024–2026</p>
-          </div>
-          <div>
-            <p>Designed and prototyped BMS hardware for military and industrial 6T batteries: multi-layer boards with precision analog sensing, PWM control, and high-current paths, plus CAN telemetry and diagnostics for integration with vehicle controllers.</p>
-            <ul class="stack"><li>Altium</li><li>CAN</li><li>SPI / I2C</li><li>Hardware bring-up</li></ul>
+            <p>An autonomous Chevrolet Bolt EUV for the AutoDrive Challenge II competition. I designed the electrical power distribution, sensor suite and roof rack, then led vehicle-systems hardware: waterproofing the sensors and harnesses, and integrating the sensors with the central compute.</p>
+            <ul class="stack"><li>Power distribution</li><li>Wiring harnesses</li><li>Sensor integration</li></ul>
           </div>
         </article>
 
@@ -404,7 +378,7 @@
           </div>
           <div>
             <h3>Manufacturing Process Engineer</h3>
-            <p class="muted">Greensboro, NC. Ran roll-to-roll lithium metal anode production and characterized cells with SEM/EDX, EIS and cycling. Assembled ~5 mAh pouch cells and tested anodes with optical microscopy, contact-angle and peel-strength tests.</p>
+            <p class="muted">Greensboro, NC. Ran roll-to-roll lithium metal anode production and tested battery cells for performance and quality. Assembled pouch cells and inspected anode quality with microscopy and adhesion testing.</p>
           </div>
         </li>
         <li>
@@ -414,7 +388,7 @@
           </div>
           <div>
             <h3>Electrical Engineer</h3>
-            <p class="muted">State College, PA. Designed and prototyped lithium-ion battery management systems for 6T military and industrial batteries: cell monitoring, fault detection and system-level protection, on multi-layer PCBs with precision analog sensing, PWM control, SPI/I2C and high-current power paths. Developed and validated CAN communication for telemetry, diagnostics and vehicle integration, brought up and debugged the prototype hardware, and worked with mechanical and systems engineers on performance, safety and environmental requirements.</p>
+            <p class="muted">State College, PA. Designed and prototyped battery management systems (BMS) for military and industrial batteries, and multi-layer PCBs for precision sensing, power control and high-current paths. Developed CAN communication so the battery reports its status and faults to the vehicle. Tested, debugged and validated prototype hardware, and worked with mechanical and systems engineers to meet performance, safety and environmental requirements.</p>
           </div>
         </li>
         <li>
@@ -424,7 +398,7 @@
           </div>
           <div>
             <h3>Electrical Engineer</h3>
-            <p class="muted">State College, PA. Microcontroller firmware for BMS prototypes, a custom cell test platform, and an automated battery test rig. Promoted from intern in February 2024.</p>
+            <p class="muted">State College, PA. Led end-to-end development of a battery test platform: circuit boards, C/C++ firmware and data collection. Programmed BMS prototypes and built an automated battery test rig. Promoted from intern in February 2024.</p>
           </div>
         </li>
       </ol>
@@ -439,7 +413,6 @@
           <li>
             <h3>Boston University</h3>
             <p>MS in Electrical Engineering, expected December 2027</p>
-            <p class="muted">Focus: cyber-physical systems, robotics, computer vision</p>
             <!-- Add relevant coursework here once you've taken it -->
           </li>
           <li>
@@ -454,12 +427,9 @@
         <!-- Add OpenCV / Git here once you can talk through them in an interview -->
         <dl class="skills">
           <div><dt>Programming</dt><dd>Python, C/C++, MATLAB, LabVIEW</dd></div>
-          <div><dt>Robotics and ML</dt><dd>ROS 2, NVIDIA Isaac Sim and Isaac Lab, reinforcement learning (PPO), PyTorch, RGB-D perception</dd></div>
-          <div><dt>Tools</dt><dd>Linux, Git, HPC clusters (Singularity)</dd></div>
-          <div><dt>Hardware and EDA</dt><dd>Altium, KiCad, multi-layer PCB design, Arduino</dd></div>
-          <div><dt>Communication</dt><dd>CAN, SPI, I2C</dd></div>
-          <div><dt>Lab and test</dt><dd>Oscilloscopes, logic analyzers, SEM/EDX, EIS, li-ion battery cycle testing</dd></div>
-          <div><dt>Mechanical</dt><dd>SolidWorks, Onshape, Abaqus, 3D printing</dd></div>
+          <div><dt>Robotics and ML</dt><dd>ROS 2, Isaac Sim, Isaac Lab, reinforcement learning (PPO), PyTorch, RGB-D perception</dd></div>
+          <div><dt>Tools and Hardware</dt><dd>Linux, Git, HPC (Singularity), Altium, KiCad, CAN, SPI, I2C, oscilloscopes, logic analyzers</dd></div>
+          <div><dt>Lab and Mechanical</dt><dd>SEM/EDX, EIS, li-ion battery cycle testing, SolidWorks, OnShape, 3D printing</dd></div>
         </dl>
       </div>
     </div>
